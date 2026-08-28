@@ -50,7 +50,9 @@ RUN chmod +x configure-seacas.sh \
 RUN cp /opt/conda/envs/${env_name}/lib/exodus3.py /opt/conda/envs/${env_name}/lib/python3.10/site-packages/
 
 # 拷贝 Watershed Workflow 源码并安装
-COPY . /home/${user}/watershed_workflow
+# 从官方仓库拉取 Watershed Workflow 源码并安装
+WORKDIR /home/${user}
+RUN git clone --branch watershed-workflow-1.4.0 https://github.com/environmental-modeling-workflows/watershed-workflow.git watershed_workflow
 WORKDIR /home/${user}/watershed_workflow
 RUN ${CONDA_BIN} run -n watershed_workflow python -m pip install -e .
 
