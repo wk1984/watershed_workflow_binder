@@ -72,6 +72,8 @@ RUN git clone --depth=1 https://github.com/ecoon/ats_input_spec ats_input_spec
 WORKDIR /home/${user}/ats/ats_input_spec
 RUN ${CONDA_BIN} run -n ${env_name} python -m pip install -e .
 
+COPY --chown=${user}:100 model_input_generation /home/${user}/workdir/model_input_generation
+
 # 清理缓存并修复权限，Binder 强制要求使用非 root 用户启动
 RUN rm -rf /home/${user}/tmp \
     && chown -R ${user}:100 /home/${user} \
